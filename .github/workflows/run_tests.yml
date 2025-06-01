@@ -1,5 +1,5 @@
 name: Run Unit Tests
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test:
@@ -11,9 +11,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install dependencies
-        run: |
-          pip install pytest pandas scikit-learn
-          python -c "import sys, os; print(sys.path)"  # Debug path
+        run: pip install pytest pandas scikit-learn
       - name: Run tests
         run: |
-          PYTHONPATH=$PYTHONPATH:${{ github.workspace }} pytest tests/ -v
+          PYTHONPATH=$PYTHONPATH:$GITHUB_WORKSPACE pytest tests/ -v
