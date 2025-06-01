@@ -11,6 +11,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install dependencies
-        run: pip install pytest pandas scikit-learn
+        run: |
+          pip install pytest pandas scikit-learn
+          python -c "import sys, os; print(sys.path)"  # Debug path
       - name: Run tests
-        run: pytest tests/ -v
+        run: |
+          PYTHONPATH=$PYTHONPATH:${{ github.workspace }} pytest tests/ -v
